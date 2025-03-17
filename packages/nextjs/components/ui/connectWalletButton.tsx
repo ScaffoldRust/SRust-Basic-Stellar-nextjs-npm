@@ -1,13 +1,23 @@
-interface buttonProps {
-    onClick?: () => void
+import { Wallet } from "lucide-react"; // Import Wallet icon or any other icon you prefer
+
+interface ButtonProps {
+  onClick?: () => void;
 }
 
-function ConnectWalletButton({onClick}:buttonProps) {
-    return (
-        <button onClick={onClick} className="ml-4 p-2 btn btn-primary px-6 font-bold shadow-md shadow-primary/30 border-0 rounded-lg hover:shadow-lg hover:shadow-primary/40 hover:brightness-110 hover:cursor-pointer transition-all">
-            Connect Wallet
-        </button>
-    )
+function ConnectWalletButton({ onClick }: ButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className="relative px-5 py-2 font-medium rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-600/20 
+      text-cyan-400 border border-cyan-500/30 shadow-sm shadow-cyan-500/20 
+      hover:shadow-cyan-500/30 hover:border-cyan-400/40 hover:text-cyan-300 
+      transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500/40
+      flex items-center gap-2"
+    >
+      <Wallet size={18} /> 
+      Connect Wallet
+    </button>
+  );
 }
 
 export default ConnectWalletButton;

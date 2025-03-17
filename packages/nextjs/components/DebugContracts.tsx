@@ -1,66 +1,123 @@
 import React from "react";
 import Link from "next/link";
 import { theme } from "../config/theme";
-import { Bug, Code, Lock } from "lucide-react";
-
+import { Bug, ArrowRight, Terminal, ShieldCheck, Zap } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const DebugContracts = () => {
     const { debugSectionTitle, debugSectionCards } = theme.homePage;
 
-    // Icons for each card
+    // Enhanced icons with web3-style design
     const cardIcons = [
-        <Code key="code" size={24} className="text-primary" />,
-        <Bug key="bug" size={24} className="text-secondary" />,
-        <Lock key="lock" size={24} className="text-accent" />
+        {
+            icon: <Terminal size={24} className="text-cyan-400" />,
+            bgColor: "bg-slate-800/80",
+            borderColor: "border-cyan-500/30",
+            glowColor: "shadow-cyan-500/20",
+            badge: "Smart Contract"
+        },
+        {
+            icon: <Bug size={24} className="text-purple-400" />,
+            bgColor: "bg-slate-800/80",
+            borderColor: "border-purple-500/30",
+            glowColor: "shadow-purple-500/20",
+            badge: "Debugging"
+        },
+        {
+            icon: <ShieldCheck size={24} className="text-blue-400" />,
+            bgColor: "bg-slate-800/80",
+            borderColor: "border-blue-500/30",
+            glowColor: "shadow-blue-500/20",
+            badge: "Security"
+        }
     ];
 
     return (
-        <section className="py-20 px-4 bg-base-100 relative">
-            {/* Decorative hexagonal grid background */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTUgM2wzMCAwdjE3TDMwIDM3bC0xNS0xN1YzeiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOGI1Y2Y2IiBzdHJva2Utb3BhY2l0eT0iMC4wNSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+')] opacity-50"></div>
+        <section className="py-24 px-4 bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden">
+            {/* Grid decoration */}
+            <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5"></div>
+
+            {/* Animated gradient orbs for web3 futuristic look */}
+            <div className="absolute -top-24 -left-24 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
 
             <div className="container mx-auto relative z-10">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                    <Zap className="text-cyan-400 h-5 w-5" />
+                    <Badge variant="outline" className="text-xs font-mono uppercase tracking-wider border-cyan-500/30 bg-slate-800/50 text-cyan-400">
+                        Blockchain Tools
+                    </Badge>
+                </div>
+
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-center">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
                         {debugSectionTitle}
                     </span>
                 </h2>
-                <p className="text-lg text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+
+                <p className="text-lg text-center text-slate-300 mb-16 max-w-2xl mx-auto">
                     Interact with your smart contracts in real-time and test your DApp functionality
-                    with our powerful debugging tools.
+                    with our powerful debugging tools built for the decentralized web.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {debugSectionCards.map((card, index) => (
-                        <div
-                            key={index}
-                            className="card bg-base-200 hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-800 hover:border-primary"
-                        >
-                            <div className="card-body p-5">
-                                <div className="w-12 h-12 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center mb-4">
-                                    {cardIcons[index % cardIcons.length]}
-                                </div>
-                                <h3 className="card-title text-xl font-bold">{card.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-400 mb-6">{card.description}</p>
-                                <div className="card-actions mt-auto">
-                                    {card.buttonLink.startsWith("/") ? (
-                                        <Link
-                                            href={card.buttonLink}
-                                            className="btn btn-primary btn-sm px-6 shadow-md shadow-primary/20 border-0 hover:shadow-lg hover:shadow-primary/30 hover:brightness-110 transition-all"
+                    {debugSectionCards.map((card, index) => {
+                        const iconData = cardIcons[index % cardIcons.length];
+
+                        return (
+                            <Card
+                                key={index}
+                                className={cn(
+                                    "backdrop-blur-sm bg-slate-900/70 border-slate-700/50 hover:shadow-xl transition-all duration-500 group overflow-hidden",
+                                    `hover:${iconData.glowColor} hover:border-${iconData.borderColor.split('-')[1]}`
+                                )}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-slate-800/30 via-transparent to-slate-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                                <CardHeader className="pb-2 relative">
+                                    <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center mb-4", iconData.bgColor, `border ${iconData.borderColor}`)}>
+                                        {iconData.icon}
+                                    </div>
+
+                                    <Badge
+                                        className="absolute top-4 right-6 font-mono text-xs bg-slate-800/50 border-slate-700 text-slate-300"
+                                        variant="outline"
+                                    >
+                                        {iconData.badge}
+                                    </Badge>
+
+                                    <CardTitle className="text-xl text-slate-100">
+                                        {card.title}
+                                    </CardTitle>
+                                </CardHeader>
+
+                                <CardContent>
+                                    <CardDescription className="text-slate-400 text-sm leading-relaxed">
+                                        {card.description}
+                                    </CardDescription>
+                                </CardContent>
+
+                                <CardFooter>
+                                    <Link href={card.buttonLink} className="w-full">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            className={cn(
+                                                "w-full bg-slate-800/50 border-slate-700 text-slate-300  group-hover:translate-y-0.5 transition-all duration-300",
+                                                `hover:border-${iconData.borderColor.split('-')[1]} hover:${iconData.glowColor}`
+                                            )}
                                         >
-                                            {card.buttonText}
-                                        </Link>
-                                    ) : (
-                                        <button
-                                            className="btn btn-outline btn-sm px-6 border-gray-300 hover:border-primary hover:bg-primary/10 hover:text-primary transition-all"
-                                        >
-                                            {card.buttonText}
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                                            <span>{card.buttonText}</span>
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </Link>
+                                </CardFooter>
+                            </Card>
+                        );
+                    })}
                 </div>
             </div>
         </section>
