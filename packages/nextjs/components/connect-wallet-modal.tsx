@@ -38,6 +38,21 @@ const walletOptions: WalletOption[] = [
     name: "LOBSTR",
     icon: "/images/lobstr.png",
   },
+  {
+    id: "xbull",
+    name: "XBULL",
+    icon: "/images/xbull.svg",
+  },
+  {
+    id: "albedo",
+    name: "Albedo",
+    icon: "/images/albedo.png",
+  },
+  {
+    id: "rabet",
+    name: "Rabet",
+    icon: "/images/rabet.webp",
+  },
 ];
 
 export function ConnectWalletModal({
@@ -121,7 +136,7 @@ export function ConnectWalletModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md rounded-lg">
         <DialogHeader>
           <DialogTitle className="font-bold">
             {isConnected ? `Wallet Connected` : `Connect Your Wallet`}

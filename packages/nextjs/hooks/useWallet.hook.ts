@@ -58,6 +58,9 @@ import { useWalletContext } from "@/context/WalletContext";
 import {
   FREIGHTER_ID,
   LOBSTR_ID,
+  XBULL_ID,
+  ALBEDO_ID,
+  RABET_ID,
   WalletNetwork,
 } from "@creit.tech/stellar-wallets-kit";
 import { useState } from "react";
@@ -82,6 +85,12 @@ export const useWallet = () => {
           ? "Freighter"
           : walletId === LOBSTR_ID
           ? "LOBSTR"
+          : walletId === XBULL_ID
+          ? "XBull"
+          : walletId === ALBEDO_ID
+          ? "Albedo"
+          : walletId === RABET_ID
+          ? "Rabet"
           : "Unknown Wallet";
 
       walletState.connect(address, walletName);
