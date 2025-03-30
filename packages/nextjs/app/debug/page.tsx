@@ -1,3 +1,4 @@
+"use client";
 import { Layout } from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -5,8 +6,11 @@ import { theme } from "@/config/theme";
 import Head from "next/head";
 import { Terminal, Code, Activity, Zap } from "lucide-react";
 import { InvokeContract, ContractInteraction, ContractEvents } from "@/components/debug";
+import { useState } from "react";
 
 export default function DebugPage() {
+  const [activeTab, setActiveTab] = useState("invoke");
+
   return (
     <>
       <Head>
@@ -40,7 +44,7 @@ export default function DebugPage() {
               Interact with and debug your smart contracts in real-time with our powerful debugging tools
             </p>
 
-            <Tabs defaultValue="invoke" className="space-y-4">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
               <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 border-slate-700/50">
                 <TabsTrigger value="invoke" className="text-gray-400 data-[state=active]:bg-slate-700/50 data-[state=active]:text-cyan-400">
                   <Terminal className="mr-2 h-4 w-4" />
@@ -57,7 +61,7 @@ export default function DebugPage() {
               </TabsList>
 
               <TabsContent value="invoke" className="space-y-4">
-                <InvokeContract />
+                <InvokeContract onSuccess={() => setActiveTab("interact")} />
               </TabsContent>
 
               <TabsContent value="interact" className="space-y-4">
