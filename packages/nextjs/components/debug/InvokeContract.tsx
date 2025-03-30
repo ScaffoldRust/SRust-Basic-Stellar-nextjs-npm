@@ -1,9 +1,35 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
+import { Play, Loader2, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
 
-export function InvokeContract() {
+interface InvokeContractProps {
+  onSuccess?: () => void;
+}
+
+export function InvokeContract({ onSuccess }: InvokeContractProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleInvoke = async () => {
+    setIsLoading(true);
+    setIsSuccess(false);
+    try {
+      // Simulate contract invocation
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setIsSuccess(true);
+      // Add delay before switching tabs to show success message
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      onSuccess?.();
+    } catch (error) {
+      console.error('Failed to invoke contract:', error);
+    } finally {
+      setIsLoading(false);
+      setIsSuccess(false);
+    }
+  };
+
   return (
     <Card className="backdrop-blur-sm bg-slate-900/70 border-slate-700/50 hover:shadow-xl transition-all duration-500 group overflow-hidden">
       <CardHeader>
@@ -30,9 +56,31 @@ export function InvokeContract() {
             </div>
           </div>
         </div>
-        <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white border-none">
-          <Play className="mr-2 h-4 w-4" />
-          Invoke Contract
+        <Button 
+          className={`w-full border-none transition-all duration-300 ${
+            isSuccess 
+              ? 'bg-green-600 hover:bg-green-700' 
+              : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700'
+          } text-white`}
+          onClick={handleInvoke}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Invoking...
+            </>
+          ) : isSuccess ? (
+            <>
+              <CheckCircle2 className="mr-2 h-4 w-4" />
+              Invocation Successful
+            </>
+          ) : (
+            <>
+              <Play className="mr-2 h-4 w-4" />
+              Invoke Contract
+            </>
+          )}
         </Button>
       </CardContent>
     </Card>
