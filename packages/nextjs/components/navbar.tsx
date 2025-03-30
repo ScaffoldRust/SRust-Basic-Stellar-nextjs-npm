@@ -17,7 +17,7 @@ export const NavBar = () => {
 
   const navlinks = [
     { id: 1, title: "Home", path: "/" },
-    { id: 2, title: "Debug Contracts", path: "#" },
+    { id: 2, title: "Debug Contracts", path: "/debug" },
   ];
 
   useEffect(() => {
